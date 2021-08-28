@@ -6,21 +6,28 @@ import java.util.LinkedList;
 public class backtrackingThread extends Thread {
 	LinkedList<GraphNode> nodeList = new LinkedList<GraphNode>();
 	int ans = Integer.MAX_VALUE;
+	boolean branchNBound = false;
+	boolean mstInclude = false;
 	
-	public void run() {
-//		System.out.println("thread runinng");		
+	public void run() {		
 		int size = nodeList.size();
 		while(size-- > 0) {
 			GraphNode node = nodeList.get(size);
-			node.processPath(); // calculate distance
-//			System.out.println(node.ans);
+			
+			// calculate distance
+			if(branchNBound) 
+				node.processPath(mstInclude);
+			else
+				node.processPath();
+			
 			ans = Math.min(node.ans, ans);
 		}
     }
 	
-	public backtrackingThread(GraphNode node){
+	public backtrackingThread(boolean branchNBound , boolean mstInclude,  GraphNode node){
+		this.branchNBound = branchNBound;
+		this.mstInclude = mstInclude;
 		nodeList.add(node);
-		start();
 	}
 
 

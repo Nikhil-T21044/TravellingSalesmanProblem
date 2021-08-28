@@ -16,7 +16,11 @@ public class GraphNode {
 		this.ans = ans;
 	}
 	
+	void processPath(boolean mstInclude){
+		ans = new TSP().tsp(App.graph, v, currPos, App.graph.length, count, cost, ans, mstInclude);
+	}
+	
 	void processPath(){
-		ans = App.tsp(App.graph, v, currPos, App.n, count, cost, ans);
+		ans = new TSP().tsp(App.graph, v, currPos, App.graph.length, count, cost, ans);
 	}
 }
