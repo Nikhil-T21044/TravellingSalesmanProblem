@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.IOException;
+
 /*
  * @author Nikhil
  * */
@@ -10,7 +13,7 @@ public class App
 //	static boolean branchNBound = false;
 
 	static int tspParallel(int[][] graph, boolean[] v, int currPos, int count, int cost, int ans, boolean branchNBound, boolean mstInclude) {
-		int noOfThreads = graph.length;
+		int noOfThreads = 8;//graph.length;
 		backtrackingThread[] t = new backtrackingThread[noOfThreads];
 
 		v[0] =  true;
@@ -62,7 +65,7 @@ public class App
 		boolean[] v;
 		int n;
 
-		graph = generateMatrix(15);
+		graph = generateMatrix();  //reading input from file
 		n = graph.length;
 		
 		System.out.println("Execution time \tTOTAL_PATH_COST\t  Graph Size (" + n +"*"+ n + ") \t\t \n");
@@ -151,6 +154,17 @@ public class App
     	    }           
     	}
     return matrix;	
+    }
+	
+	static int[][] generateMatrix(){
+    	try {
+			return ( new Input().readFromFile(new File("./TSP/Input36.tsp")) );
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	return new int [1][1];	 // if some exception occured
     }
 	
     static void printMatrix(int[][] matrix) {
